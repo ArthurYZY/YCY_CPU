@@ -1,0 +1,36 @@
+NET "sw<0>" LOC = T7;
+NET "sw<1>" LOC = R7;
+NET "sw<2>" LOC = U8;
+NET "sw<3>" LOC = V4;
+NET "sw<4>" LOC = V3;
+NET "sw<5>" LOC = V2;
+NET "sw<6>" LOC = U1;
+NET "sw<7>" LOC = R4;
+NET "sw<8>" LOC = R1;
+NET "sw<9>" LOC = N2;
+NET "sw<10>" LOC = N1;
+NET "sw<11>" LOC = M1;
+NET "sw<12>" LOC = K7;
+NET "sw<13>" LOC = K2;
+NET "sw<14>" LOC = J7;
+NET "sw<15>" LOC = J6;
+
+NET "Fout<0>" LOC = D10;
+NET "Fout<1>" LOC = E10;
+NET "Fout<2>" LOC = A11;
+NET "Fout<3>" LOC = B11;
+NET "Fout<4>" LOC = C11;
+NET "Fout<5>" LOC = D11;
+NET "Fout<6>" LOC = E11;
+NET "Fout<7>" LOC = F11;
+NET "Fout<8>" LOC = A12;
+NET "Fout<9>" LOC = E12;
+NET "Fout<10>" LOC = F12;
+NET "Fout<11>" LOC = A13;
+NET "Fout<12>" LOC = B13;
+NET "Fout<13>" LOC = D13;
+NET "Fout<14>" LOC = E13;
+NET "Fout<15>" LOC = A14;
+
+NET "clk" LOC = U9;
+NET "rst" LOC = U10;
