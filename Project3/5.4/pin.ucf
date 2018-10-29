@@ -74,3 +74,6 @@ NET "EN" LOC = M15;
 
 NET "CLK" LOC = U9;
 NET "RST" LOC = U10;
+
+NET "rdn" LOC = C14;
+NET "wrn" LOC = U5;
