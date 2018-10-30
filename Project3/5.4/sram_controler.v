@@ -13,25 +13,25 @@ module SRAM_CONTROLER(
 	output wire wrn // 写串口，要关闭
 	);
 
+	// RAM状态
 	parameter STOP = -1;
-
 	parameter WRITE = 0;
 	parameter READ = 1;
 
+	// 用户控制状态机状态
 	parameter WRITE_ADD1 = 2;
 	parameter WRITE_DATA1 = 3;
 	parameter INCREASE_DATA1 = 4;
 	parameter READ_DATA1 = 5;
 
-
 	integer ram1_state; // 记录ram1的状态
 	integer state; // 记录用户输入状态机的状态
-	reg[15:0] data_to_write; // 要写入RAM的数据
-	reg ram1_data_write = 1; // 标记数据线是否为写入Ram1的状态
-	reg [17:0] Ram1_first_address; // 记录Ram1数据的首地址
-	reg CLK_mark; // 记录CLK的按下情况
-	reg [3:0] delay; // 记录延迟情况
 	integer count = 10; // 对输入数据个数计数
+	reg[15:0] data_to_write; // 要写入RAM的数据
+	reg[17:0] Ram1_first_address; // 记录Ram1数据的首地址
+	reg[3:0] delay; // 记录延迟情况
+	reg ram1_data_write = 1; // 标记数据线是否为写入Ram1的状态
+	reg CLK_mark; // 记录CLK的按下情况
 
 	assign rdn = 1; // 关闭读串口
 	assign wrn = 1; // 关闭写串口
@@ -48,14 +48,13 @@ module SRAM_CONTROLER(
 		if (CLK > CLK_mark) begin // CLK上升沿，初始化为0
 			delay <= 0;
 		end else begin // 否则每个周期加1
-			delay <= delay + 1; // TODO 是否需要判断
+			delay <= delay + 1;
 		end
 	end
 
 	// 控制RAM1逻辑
-	always @(negedge RST or negedge CLK1) begin
+	always @(posedge CLK1 or negedge RST) begin
 		if (!RST) begin
-			// TODO 初始化
 			ram1_data_write <= 1; // 非高阻态
 			Ram1_EN <= 1;
 			Ram1_OE <= 1;
@@ -94,7 +93,7 @@ module SRAM_CONTROLER(
 
 	// 用户输入控制逻辑
 	always @(posedge CLK1 or negedge RST) begin
-		if (!RST) begin // TODO 初始化
+		if (!RST) begin
 			state <= WRITE_ADD1;
 			ram1_state <= STOP;
 			L <= 0;
@@ -111,7 +110,7 @@ module SRAM_CONTROLER(
 				end
 
 				WRITE_DATA1: begin
-					ram1_state <= WRITE; // TODO check correctness
+					ram1_state <= WRITE;
 					data_to_write <= SW;
 					L <= SW; // LED显示数据
 					state <= INCREASE_DATA1; // 状态转移
@@ -151,7 +150,7 @@ module SRAM_CONTROLER(
 					count <= 10;
 				end
 			endcase
-		end else if (state == READ_DATA1 && delay == 4) begin
+		end else if (state == READ_DATA1 && delay == 11) begin
 			L <= Ram1_data; // 读取数据有延时，等一会儿才会显示正确
 		end else if (state == READ_DATA1 && delay == 7) begin
 			ram1_state <= READ; // ram从写到读状态转换需要一定延时
